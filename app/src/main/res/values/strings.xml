@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">tp_1</string>
+    <string name="title_activity_main2">MainActivity2</string>
+
+    <string name="row_one">Row One</string>
+    <string name="row_two">Row Two</string>
+    <string name="row_three">Row Three</string>
+    <string name="row_Four">Row Four</string>
+    <string name="title_activity_3">activity3</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="lorem_ipsum">
+        Lorem ipsum dolor sit amet.
+    </string>
+
+</resources>
