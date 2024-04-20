@@ -4,6 +4,7 @@ import static androidx.preference.PreferenceManager.getDefaultSharedPreferences;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -57,6 +58,30 @@ public class activity_Inscription extends AppCompatActivity {
 
                 sexe="femme";
             }
+
+            sqliteDataBase dbHelper = new sqliteDataBase(this);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            /*
+            ContentValues values = new ContentValues();
+            values.put("Login", email.getText().toString());
+            values.put("Pwd", pwd.getText().toString());
+            values.put("nom", nom.getText().toString());
+            values.put("tel", tel.getText().toString());
+            values.put("homme", sexe);
+
+            db.insert("users", null, values);
+*/
+
+            String sql = "INSERT INTO users (Login, Pwd,nom,tel, homme) VALUES ('" + email.getText().toString() + "', '"+pwd.getText().toString()
+                    + "', '"+nom.getText().toString()+ "', '"+tel.getText().toString()+ "', '"+sexe+"')";
+
+
+            db.execSQL(sql);
+
+
+
+
             Intent intent = new Intent(this,HomeActivity.class);
 
           intent.putExtra("sexe", sexe);

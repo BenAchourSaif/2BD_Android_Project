@@ -4,6 +4,8 @@ import static androidx.preference.PreferenceManager.getDefaultSharedPreferences;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -29,19 +31,44 @@ public class LoginActivity extends AppCompatActivity {
     if((login.getText().toString().length()<8)||(pwd.getText().toString().length()<4)){
         Toast.makeText(LoginActivity.this, "Vous devez saisir des données valide",Toast.LENGTH_SHORT);
     }else{
-        SharedPreferences settings = getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = settings.edit();
 
-        editor.putString("Login", login.getText().toString());
-        editor.putString("Pwd", pwd.getText().toString());
 
-        editor.apply();
+        sqliteDataBase dbHelper = new sqliteDataBase(this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
-        startActivity(intent) ;
+
+        if(utilisateurExiste(db,login.getText().toString(),pwd.getText().toString() )){
+
+
+            SharedPreferences settings = getDefaultSharedPreferences(this);
+            SharedPreferences.Editor editor = settings.edit();
+
+            editor.putString("Login", login.getText().toString());
+            editor.putString("Pwd", pwd.getText().toString());
+
+            editor.apply();
+
+            Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
+            startActivity(intent) ;
+
+
+        }else {
+
+            Toast.makeText(LoginActivity.this, "Login ou mot de passe incorrecte",Toast.LENGTH_SHORT);
+        }
+
+
     }
 
 
+    }
+    public boolean utilisateurExiste(SQLiteDatabase db, String login, String motDePasse) {
+        String query = "SELECT COUNT(*) FROM users WHERE login = ? AND mot_de_passe = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{login, motDePasse});
+        cursor.moveToFirst();
+        int count = cursor.getInt(0);
+        cursor.close();
+        return count > 0;
     }
 
     public void inscri( View v){

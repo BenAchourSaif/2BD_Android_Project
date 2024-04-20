@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class sqliteDataBase extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "MaBaseDeDonnees";
+    private static final String DATABASE_NAME = "legoAppDB";
 
     public sqliteDataBase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -15,13 +15,13 @@ public class sqliteDataBase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Créer les tables de la base de données
-        db.execSQL("CREATE TABLE MaTable (id INTEGER PRIMARY KEY, nom TEXT)");
+        db.execSQL("CREATE TABLE users (id INTEGER PRIMARY KEY, nom TEXT, prenom TEXT, Login TEXT,Pwd TEXT, tel TEXT, homme TEXT)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Mettre à jour la base de données en cas de changements de schéma
-        db.execSQL("DROP TABLE IF EXISTS MaTable");
+        db.execSQL("DROP TABLE IF EXISTS users");
         onCreate(db);
     }
 }
