@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -37,6 +38,7 @@ public class activity_Inscription extends AppCompatActivity {
         if((nom.getText().toString().length()<8)||(email.getText().toString().length()<15)
                 ||(pwd.getText().toString().length()<4)||(tel.getText().toString().length()!=8)
         ){
+            Log.e("TAG", "Vous devez saisir des données valide");
              Toast.makeText( activity_Inscription.this, "Vous devez saisir des données valide",Toast.LENGTH_SHORT);
         }else{
             SharedPreferences settings = getDefaultSharedPreferences(this);
@@ -52,12 +54,14 @@ public class activity_Inscription extends AppCompatActivity {
 
 
             String sexe;
-            if(homme.isChecked()){
-                sexe="homme";
-            }else{
-
-                sexe="femme";
-            }
+                if(homme.isChecked())
+                {
+                    sexe="homme";
+                }
+                else
+                {
+                        sexe="femme";
+                }
 
             sqliteDataBase dbHelper = new sqliteDataBase(this);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -78,7 +82,8 @@ public class activity_Inscription extends AppCompatActivity {
 
 
             db.execSQL(sql);
-
+            db.close();
+            Log.e("TAG", "après inscription");
 
 
 

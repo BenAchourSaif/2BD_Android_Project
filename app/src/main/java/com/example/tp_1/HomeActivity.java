@@ -4,6 +4,7 @@ import static androidx.preference.PreferenceManager.getDefaultSharedPreferences;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
@@ -39,9 +40,11 @@ public class HomeActivity extends AppCompatActivity {
             editor.remove("Login");
             editor.remove("Pwd");
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
             editor.apply();
+        }
 
-            Intent intent = new Intent(HomeActivity.this,MainActivity.class);
+        Intent intent = new Intent(HomeActivity.this,MainActivity.class);
             startActivity(intent) ;
 
     }
